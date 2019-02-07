@@ -33,11 +33,23 @@ RUN apt-get update && apt-get install -y \
        libjson-glib-dev \
        libpcap-dev \
        git \
+        gperf \
+#libbcg729-dev \
+libbencode-perl \
+libcrypt-openssl-rsa-perl \
+libcrypt-rijndael-perl \
+libdigest-crc-perl \
+libdigest-hmac-perl \
+libio-multiplex-perl \
+libio-socket-inet6-perl \
+libnet-interface-perl \
+libsocket6-perl \
+libsystemd-dev \
     && ( ( apt-get install -y linux-headers-$(uname -r) linux-image-$(uname -r) && \
       module-assistant update && \
       module-assistant auto-install ngcp-rtpengine-kernel-source ) || true ) \
     && apt-get clean && rm -rf /var/lib/apt/lists
-
+ENV DEB_BUILD_PROFILES="pkg.ngcp-rtpengine.nobcg729"
 RUN dpkg-checkbuilddeps
 RUN dpkg-buildpackage -b -us -uc
 
